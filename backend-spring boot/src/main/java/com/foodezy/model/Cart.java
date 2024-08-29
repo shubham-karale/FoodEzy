@@ -1,4 +1,6 @@
 package com.foodezy.model;
+// One Customer can have only one cart
+// One Cart can have many CartItems
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +26,11 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	// ! One Cart have One Customer
 	@OneToOne
 	@JoinColumn(name = "customer_id")
 	private User customer;
-
+ // * One Cart have Many CartItems
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CartItem> items = new ArrayList<>();
 	
