@@ -22,15 +22,17 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Many CartItems have One Cart
     @JsonIgnore
     @ManyToOne
     private Cart cart;
 
+    // Many CartItems have One Food
     @ManyToOne
     private Food food;
     
     private int quantity;
-    
+     // * One CartItem have Many Ingredients
     private List<String> ingredients;
     
     private Long totalPrice;

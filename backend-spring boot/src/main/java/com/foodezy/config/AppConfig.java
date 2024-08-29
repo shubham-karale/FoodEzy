@@ -21,19 +21,23 @@ import jakarta.servlet.http.HttpServletRequest;
 @EnableWebSecurity
 public class AppConfig {
 
+    /*
+       What is CSRF?
+      * Ans = Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated.
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
-                                .requestMatchers("/api/**").authenticated()
-                                
-                                .anyRequest().permitAll()
+                		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN") // ! api/admin is only accessible to restaurant owners and admins
+                                .requestMatchers("/api/**").authenticated() // ! api is only accessible to authenticated users
+
+                                .anyRequest().permitAll() // ! all other requests are permitted
                 )
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+                .csrf(csrf -> csrf.disable()) // ! disable CSRF
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())); // ! configure CORS
                
 		
 		return http.build();

@@ -1,10 +1,8 @@
 package com.foodezy.model;
 // One Customer can have only one cart
 // One Cart can have many CartItems
-
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
